@@ -112,7 +112,7 @@ export default function BestsellersGrid() {
     const message = encodeURIComponent(
       `Hello Swift Grow Innovations Ltd, I am inquiring about the ${product.title} (KSh ${product.priceKsh.toLocaleString()}). Please send us an official quotation / spec sheet.`
     );
-    return `https://wa.me/254700000000?text=${message}`;
+    return `https://wa.me/254721595989?text=${message}`;
   };
 
   return (

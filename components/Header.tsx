@@ -134,7 +134,7 @@ export default function Header() {
             </span>
             <span className="hidden md:flex items-center gap-1.5 text-stone-300">
               <Phone className="w-3.5 h-3.5 text-[#E5BF3B]" />
-              Corporate Sales: <strong className="text-white font-semibold">+254 700 000 000</strong>
+              Corporate Sales: <strong className="text-white font-semibold">+254 721 595 989</strong>
             </span>
           </div>
 
