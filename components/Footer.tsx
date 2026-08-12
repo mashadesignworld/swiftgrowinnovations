@@ -143,7 +143,7 @@ export default function Footer() {
             {/* Social Proof Links */}
             <div className="flex items-center gap-3 pt-2">
               {[
-                { icon: LinkedinIcon, href: '#' },
+                { icon: LinkedinIcon , href: '#' },
                 { icon: FacebookIcon, href: '#' },
                 { icon: TwitterIcon, href: '#' },
                 { icon: InstagramIcon, href: '#' }

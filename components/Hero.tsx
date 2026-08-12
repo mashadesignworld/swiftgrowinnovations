@@ -1,192 +1,305 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
-  Building2, 
-  GraduationCap, 
-  Stethoscope, 
-  Laptop, 
-  CheckCircle2, 
+  Search, 
   ArrowRight, 
-  FileText, 
-  Truck, 
   ShieldCheck, 
-  Clock 
+  Truck, 
+  Compass, 
+  FileCheck2,
+  ChevronLeft,
+  ChevronRight,
+  Building2,
+  GraduationCap,
+  Stethoscope,
+  Laptop
 } from 'lucide-react';
 
+// Hero Banners Data
+const HERO_SLIDES = [
+  {
+    id: 1,
+    title: 'Transform Your Workplace',
+    subtitle: 'Ergonomic Executive Desks & Task Seating',
+    ctaText: 'Shop Office Solutions',
+    ctaHref: '/category/office',
+    badge: '2026 Collection',
+    image: '/5.jpg', 
+  },
+  {
+    id: 2,
+    title: 'CBC-Aligned School Furniture',
+    subtitle: 'Durable Desks, Chairs & Academy Fit-Outs',
+    ctaText: 'Explore Education Catalog',
+    ctaHref: '/category/schools',
+    badge: 'Institutional Standard',
+    image: '/6.jpg',
+  },
+  {
+    id: 3,
+    title: 'Clinical & Laboratory Furniture',
+    subtitle: 'Heavy-Duty Anti-Bacterial Worktops & Seating',
+    ctaText: 'Request Healthcare Spec Sheet',
+    ctaHref: '/category/hospital-lab',
+    badge: 'ISO Certified',
+    image: '/8.png',
+  }
+];
+
+// Quick Category Cards (NBF-Style Visual Navigation)
+const VISUAL_CATEGORIES = [
+  {
+    title: 'Office Furniture',
+    caption: 'Executive desks & ergonomic seating',
+    icon: Building2,
+    href: '/category/office',
+    bgColor: 'bg-stone-900',
+    accentColor: 'text-[#E5BF3B]'
+  },
+  {
+    title: 'School & CBC',
+    caption: 'Student desks, lockers & lab tables',
+    icon: GraduationCap,
+    href: '/category/schools',
+    bgColor: 'bg-stone-900',
+    accentColor: 'text-[#E5BF3B]'
+  },
+  {
+    title: 'Hospital & Lab',
+    caption: 'Clinical worktops & medical carts',
+    icon: Stethoscope,
+    href: '/category/hospital-lab',
+    bgColor: 'bg-stone-900',
+    accentColor: 'text-[#E5BF3B]'
+  },
+  {
+    title: 'ICT & Infrastructure',
+    caption: 'Server racks, workstations & hardware',
+    icon: Laptop,
+    href: '/category/ict-equipment',
+    bgColor: 'bg-stone-900',
+    accentColor: 'text-[#E5BF3B]'
+  }
+];
+
 export default function Hero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Auto-advance hero slides every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+
   return (
-    <section className="relative bg-[#F8F9FA] overflow-hidden">
-      {/* Subtle Grid Accent Background */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(#1E2022 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
-        }}
-      />
-
-      {/* MAIN B2B HERO GRID */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
-        
-        {/* Copy & Value Proposition Column */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1E2022] text-[#E5BF3B] rounded-full text-xs font-bold tracking-wider uppercase shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-[#E5BF3B] animate-pulse" />
-            Leading Commercial & Institutional Supplier
-          </div>
-
-          {/* Heading */}
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-black text-[#1E2022] leading-[1.15] tracking-tight">
-            Institutional Furniture & ICT Solutions{' '}
-            <span className="text-[#7A5333] underline decoration-[#E5BF3B] decoration-4 underline-offset-4">
-              Engineered for Performance.
+    <section className="bg-stone-100 text-[#1E2022] font-sans">
+      
+      {/* 1. TOP B2B QUICK SEARCH & SPACE PLANNING BANNER */}
+      <div className="bg-[#1E2022] text-white py-3 px-4 sm:px-8 border-b border-stone-800">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3 text-xs">
+            <span className="bg-[#E5BF3B] text-[#1E2022] font-bold px-2.5 py-0.5 rounded text-[10px] uppercase tracking-wider">
+              Free Service
             </span>
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-stone-600 text-sm sm:text-base lg:text-lg max-w-2xl leading-relaxed font-normal">
-            Complete turnkey fit-outs for offices, schools, medical laboratories, and enterprise IT infrastructure across Kenya. Certified durability, bulk procurement pricing, and direct installation services.
-          </p>
-
-          {/* Core Capability Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            {[
-              { label: 'Corporate Office', icon: Building2 },
-              { label: 'Schools & Academies', icon: GraduationCap },
-              { label: 'Hospitals & Labs', icon: Stethoscope },
-              { label: 'ICT Hardware', icon: Laptop },
-            ].map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div key={idx} className="flex items-center gap-2 bg-white border border-stone-200 rounded-lg p-2.5 shadow-2xs">
-                  <Icon className="w-4 h-4 text-[#E5BF3B] shrink-0" />
-                  <span className="text-xs font-bold text-[#1E2022] truncate">{item.label}</span>
-                </div>
-              );
-            })}
+            <span className="text-stone-300">Need custom layout support? <strong>Get Free 3D Space Planning & Quotations</strong></span>
           </div>
 
-          {/* Action Callouts */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-2">
-            <Link 
-              href="#rfq"
-              className="bg-[#1E2022] hover:bg-[#7A5333] text-white font-bold px-7 py-4 rounded-xl transition-all duration-200 text-xs tracking-wider uppercase flex items-center justify-center gap-2.5 border-b-4 border-[#E5BF3B] shadow-md hover:shadow-lg"
-            >
-              <FileText className="w-4 h-4 text-[#E5BF3B]" />
-              <span>Request Formal Quote / Tender</span>
-            </Link>
-
-            <Link 
-              href="/category/office"
-              className="bg-white hover:bg-stone-50 text-[#1E2022] border border-stone-300 font-bold px-6 py-4 rounded-xl transition-all duration-200 text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-2xs"
-            >
-              <span>Explore Catalog</span>
-              <ArrowRight className="w-4 h-4 text-[#7A5333]" />
-            </Link>
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 text-xs text-stone-500 border-t border-stone-200">
-            <span className="flex items-center gap-1.5 font-semibold text-[#1E2022]">
-              <CheckCircle2 className="w-4 h-4 text-[#E5BF3B]" /> Verified Tax Credit & Govt Partner
-            </span>
-            <span className="flex items-center gap-1.5 font-semibold text-[#1E2022]">
-              <CheckCircle2 className="w-4 h-4 text-[#E5BF3B]" /> Direct Bulk Imports & Assembly
-            </span>
-          </div>
+          {/* Quick Search Bar */}
+          <form 
+            onSubmit={(e) => { e.preventDefault(); if (searchQuery) window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`; }}
+            className="relative w-full md:w-80"
+          >
+            <input 
+              type="text"
+              placeholder="Search chairs, desks, lab furniture..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-stone-900 border border-stone-700 text-white placeholder-stone-400 text-xs rounded-lg pl-9 pr-4 py-1.5 focus:outline-none focus:border-[#E5BF3B] transition-colors"
+            />
+            <Search className="w-4 h-4 text-stone-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+          </form>
         </div>
-
-        {/* Media Column (Image Showcase + Dynamic Overlay Badge) */}
-        <div className="lg:col-span-5">
-          <div className="relative pt-4 sm:pt-6">
-            
-            {/* Primary Visual Showcase Box */}
-            <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-[#1E2022] group">
-              {/* High-Resolution Unsplash Image Placeholder */}
-                            <Image
-                src="/1.jpg"
-                alt="Swift Grow Innovations Office & Institutional Fit-Out Showcase"
-                fill
-                priority
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-95"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              {/* Dark Gradient Overlay for High Text Readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1E2022]/90 via-[#1E2022]/20 to-black/30 pointer-events-none" />
-
-              {/* Top Status Bar Inside Image */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                <span className="bg-[#E5BF3B] text-[#1E2022] font-black text-[10px] tracking-widest px-3 py-1 rounded-full uppercase shadow-xs">
-                  Institutional Fit-Outs
-                </span>
-                <span className="text-white/80 text-[10px] font-mono bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                  SWIFT-GROW // B2B
-                </span>
-              </div>
-
-              {/* Bottom Feature Overlay Card Inside Image */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/15 backdrop-blur-md border border-white/20 rounded-xl p-3 sm:p-4 text-white z-10 flex items-center justify-between shadow-lg">
-               
-                <div className="h-2.5 w-2.5 rounded-full bg-[#E5BF3B] animate-ping shrink-0" />
-              </div>
-            </div>
-
-            {/* Non-overlapping Trust Counter Badge (Clean Floating Positioning) */}
-            <div className="mt-4 sm:mt-0 sm:absolute sm:-bottom-6 sm:-left-6 bg-white rounded-xl shadow-xl border border-stone-200 p-3.5 sm:p-4 flex items-center gap-3 z-20 max-w-xs">
-              <div className="p-2.5 bg-[#E5BF3B]/20 rounded-lg text-[#1E2022] shrink-0">
-                <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#7A5333]" />
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm font-black text-[#1E2022]">100% Guaranteed Quality</p>
-                <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium">Compliance & Commercial Warranty</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
       </div>
 
-      {/* TRUST GUARANTEE & SERVICE BAR */}
-      <div className="border-t border-stone-200 bg-white py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-left">
+      {/* 2. MAIN VISUAL HERO SLIDER */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-4">
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl h-[420px] sm:h-[480px] lg:h-[520px] bg-[#1E2022] border border-stone-200">
           
-          <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#F8F9FA] border border-stone-100">
-            <div className="p-3 bg-[#1E2022] rounded-lg text-[#E5BF3B] shrink-0">
-              <Truck className="w-5 h-5" />
+          {HERO_SLIDES.map((slide, idx) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+              }`}
+            >
+              {/* High-Impact Image Background */}
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                priority={idx === 0}
+                className="object-cover object-center brightness-75 scale-100 hover:scale-105 transition-transform duration-1000"
+                sizes="(max-width: 1200px) 100vw, 1200px"
+              />
+
+              {/* Gradient Overlay for Crisp Text Readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
+
+              {/* Hero Content Overlay */}
+              <div className="absolute inset-0 p-8 sm:p-12 lg:p-16 flex flex-col justify-center max-w-2xl text-white">
+                <span className="inline-block bg-[#E5BF3B] text-[#1E2022] font-black text-[11px] tracking-widest px-3 py-1 rounded-md uppercase w-fit mb-4 shadow-sm">
+                  {slide.badge}
+                </span>
+
+                <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-tight mb-3">
+                  {slide.title}
+                </h1>
+
+                <p className="text-stone-300 text-base sm:text-lg font-normal mb-8 leading-relaxed max-w-lg">
+                  {slide.subtitle}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <Link
+                    href={slide.ctaHref}
+                    className="bg-[#E5BF3B] hover:bg-[#d8b02e] text-[#1E2022] font-extrabold px-7 py-3.5 rounded-xl text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all transform hover:-translate-y-0.5"
+                  >
+                    <span>{slide.ctaText}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+
+                  <Link
+                    href="/request-quote"
+                    className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all"
+                  >
+                    Request Bulk RFQ
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Carousel Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
+            aria-label="Next Slide"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+            {HERO_SLIDES.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all ${
+                  idx === currentSlide ? 'w-8 bg-[#E5BF3B]' : 'w-2 bg-white/50 hover:bg-white'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+      {/* 3. NBF-STYLE VISUAL CATEGORY QUICK-CARDS */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {VISUAL_CATEGORIES.map((cat, idx) => {
+            const Icon = cat.icon;
+            return (
+              <Link
+                key={idx}
+                href={cat.href}
+                className="group relative bg-white rounded-xl p-5 border border-stone-200 shadow-xs hover:shadow-md hover:border-[#E5BF3B] transition-all flex items-start gap-4 overflow-hidden"
+              >
+                <div className={`p-3 rounded-lg ${cat.bgColor} text-white shrink-0 group-hover:bg-[#E5BF3B] group-hover:text-[#1E2022] transition-colors`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#1E2022] group-hover:text-[#7A5333] transition-colors truncate">
+                      {cat.title}
+                    </h3>
+                    <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-[#E5BF3B] group-hover:translate-x-1 transition-all" />
+                  </div>
+                  <p className="text-xs text-stone-500 mt-1 line-clamp-1">
+                    {cat.caption}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 4. VALUE PROPOSITION / TRUST GUARANTEE BAR */}
+      <div className="border-t border-stone-200 bg-white py-6 px-4 sm:px-8 mt-2">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+          
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-[#1E2022] shrink-0">
+              <Truck className="w-5 h-5 text-[#E5BF3B]" />
             </div>
             <div>
               <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Nationwide Logistics</h4>
-              <p className="text-xs text-stone-500 mt-0.5">Prompt delivery & installation across Kenya</p>
+              <p className="text-xs text-stone-500 mt-0.5">Prompt delivery & assembly across Kenya</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#F8F9FA] border border-stone-100">
-            <div className="p-3 bg-[#1E2022] rounded-lg text-[#E5BF3B] shrink-0">
-              <FileText className="w-5 h-5" />
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-[#1E2022] shrink-0">
+              <Compass className="w-5 h-5 text-[#E5BF3B]" />
             </div>
             <div>
-              <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Institutional Quotations</h4>
-              <p className="text-xs text-stone-500 mt-0.5">Itemized RFQ & LPO billing support</p>
+              <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Free Space Planning</h4>
+              <p className="text-xs text-stone-500 mt-0.5">2D & 3D layout renders for corporate spaces</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#F8F9FA] border border-stone-100 sm:col-span-2 md:col-span-1">
-            <div className="p-3 bg-[#1E2022] rounded-lg text-[#E5BF3B] shrink-0">
-              <Clock className="w-5 h-5" />
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-[#1E2022] shrink-0">
+              <FileCheck2 className="w-5 h-5 text-[#E5BF3B]" />
             </div>
             <div>
-              <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Rapid Project Turnaround</h4>
-              <p className="text-xs text-stone-500 mt-0.5">Streamlined supply chain for tight deadlines</p>
+              <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Fast B2B RFQ Quotes</h4>
+              <p className="text-xs text-stone-500 mt-0.5">Itemized tenders processed in under 24hrs</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-lg bg-stone-100 border border-stone-200 text-[#1E2022] shrink-0">
+              <ShieldCheck className="w-5 h-5 text-[#E5BF3B]" />
+            </div>
+            <div>
+              <h4 className="font-bold text-xs text-[#1E2022] uppercase tracking-wider">Commercial Warranty</h4>
+              <p className="text-xs text-stone-500 mt-0.5">Certified heavy-duty contractor quality</p>
             </div>
           </div>
 
         </div>
       </div>
+
     </section>
   );
 }
