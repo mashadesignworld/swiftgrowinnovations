@@ -23,29 +23,29 @@ const HERO_SLIDES = [
   {
     id: 1,
     title: 'Transform Your Workplace',
-    subtitle: 'Ergonomic Executive Desks & Task Seating',
+    subtitle: 'Ergonomic Executive Desks & Chairs for Modern Offices',
     ctaText: 'Shop Office Solutions',
     ctaHref: '/category/office',
     badge: '2026 Collection',
-    image: '/5.jpg', 
+    image: '/office.png', 
   },
   {
     id: 2,
     title: 'CBC-Aligned School Furniture',
-    subtitle: 'Durable Desks, Chairs & Academy Fit-Outs',
+    subtitle: 'Durable Desks, Chairs & Lockers for Kenyan Classrooms',
     ctaText: 'Explore Education Catalog',
     ctaHref: '/category/schools',
     badge: 'Institutional Standard',
-    image: '/6.jpg',
+    image: '/cbc.png',
   },
   {
     id: 3,
     title: 'Clinical & Laboratory Furniture',
-    subtitle: 'Heavy-Duty Anti-Bacterial Worktops & Seating',
+    subtitle: 'Worktops, Carts &  Tables for Hospitals &  Clinical Laboratories',
     ctaText: 'Request Healthcare Spec Sheet',
     ctaHref: '/category/hospital-lab',
     badge: 'ISO Certified',
-    image: '/8.png',
+    image: '/lab.png',
   }
 ];
 
@@ -65,7 +65,7 @@ const VISUAL_CATEGORIES = [
     icon: GraduationCap,
     href: '/category/schools',
     bgColor: 'bg-stone-900',
-    accentColor: 'text-[#E5BF3B]'
+    accentColor: 'text-[#1E2022]'
   },
   {
     title: 'Hospital & Lab',
@@ -73,7 +73,7 @@ const VISUAL_CATEGORIES = [
     icon: Stethoscope,
     href: '/category/hospital-lab',
     bgColor: 'bg-stone-900',
-    accentColor: 'text-[#E5BF3B]'
+    accentColor: 'text-[#1E2022]'
   },
   {
     title: 'ICT & Infrastructure',
@@ -81,7 +81,7 @@ const VISUAL_CATEGORIES = [
     icon: Laptop,
     href: '/category/ict-equipment',
     bgColor: 'bg-stone-900',
-    accentColor: 'text-[#E5BF3B]'
+    accentColor: 'text-[#1E2022]'
   }
 ];
 
@@ -131,95 +131,95 @@ export default function Hero() {
       </div>
 
       {/* 2. MAIN VISUAL HERO SLIDER */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-4">
-        <div className="relative rounded-2xl overflow-hidden shadow-2xl h-[420px] sm:h-[480px] lg:h-[520px] bg-[#1E2022] border border-stone-200">
-          
-          {HERO_SLIDES.map((slide, idx) => (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-              }`}
+    <div className="w-full relative overflow-hidden shadow-2xl h-[420px] sm:h-[480px] lg:h-[520px] bg-[#1E2022]">
+  {HERO_SLIDES.map((slide, idx) => (
+    <div
+      key={slide.id}
+      className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+        idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+      }`}
+    >
+      {/* High-Impact Image Background */}
+      <Image
+        src={slide.image}
+        alt={slide.title}
+        fill
+        priority={idx === 0}
+        className="object-cover object-center brightness-75 scale-100 hover:scale-105 transition-transform duration-1000"
+        sizes="100vw"
+      />
+
+      {/* Gradient Overlay for Crisp Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
+
+      {/* Hero Content Overlay (Constrained inside max-w-7xl for clean alignment) */}
+      <div className="absolute inset-0 max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center text-white">
+        <div className="max-w-2xl">
+          <span className="inline-block bg-[#E5BF3B] text-[#1E2022] font-black text-[11px] tracking-widest px-3 py-1 rounded-md uppercase w-fit mb-4 shadow-sm">
+            {slide.badge}
+          </span>
+
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-tight mb-3">
+            {slide.title}
+          </h1>
+
+          <p className="text-black-600 text-base sm:text-lg font-normal mb-8 leading-relaxed max-w-lg">
+            {slide.subtitle}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href={slide.ctaHref}
+              className="bg-[#E5BF3B] hover:bg-[#d8b02e] text-[#1E2022] font-extrabold px-7 py-3.5 rounded-xl text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all transform hover:-translate-y-0.5"
             >
-              {/* High-Impact Image Background */}
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                priority={idx === 0}
-                className="object-cover object-center brightness-75 scale-100 hover:scale-105 transition-transform duration-1000"
-                sizes="(max-width: 1200px) 100vw, 1200px"
-              />
+              <span>{slide.ctaText}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
-              {/* Gradient Overlay for Crisp Text Readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
-
-              {/* Hero Content Overlay */}
-              <div className="absolute inset-0 p-8 sm:p-12 lg:p-16 flex flex-col justify-center max-w-2xl text-white">
-                <span className="inline-block bg-[#E5BF3B] text-[#1E2022] font-black text-[11px] tracking-widest px-3 py-1 rounded-md uppercase w-fit mb-4 shadow-sm">
-                  {slide.badge}
-                </span>
-
-                <h1 className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-white leading-tight mb-3">
-                  {slide.title}
-                </h1>
-
-                <p className="text-stone-300 text-base sm:text-lg font-normal mb-8 leading-relaxed max-w-lg">
-                  {slide.subtitle}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <Link
-                    href={slide.ctaHref}
-                    className="bg-[#E5BF3B] hover:bg-[#d8b02e] text-[#1E2022] font-extrabold px-7 py-3.5 rounded-xl text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all transform hover:-translate-y-0.5"
-                  >
-                    <span>{slide.ctaText}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-
-                  <Link
-                    href="/request-quote"
-                    className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all"
-                  >
-                    Request Bulk RFQ
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Carousel Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
-            aria-label="Previous Slide"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
-            aria-label="Next Slide"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
-          {/* Dots Indicator */}
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-            {HERO_SLIDES.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentSlide ? 'w-8 bg-[#E5BF3B]' : 'w-2 bg-white/50 hover:bg-white'
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
+            <Link
+              href="/request-quote"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 font-bold px-6 py-3.5 rounded-xl text-xs uppercase tracking-wider transition-all"
+            >
+              Request Bulk RFQ
+            </Link>
           </div>
-
         </div>
       </div>
+    </div>
+  ))}
+
+  {/* Navigation & Controls Constrained to Container Edges */}
+  <div className="absolute inset-0 max-w-7xl mx-auto pointer-events-none z-20 flex items-center justify-between px-4 sm:px-8">
+    <button
+      onClick={prevSlide}
+      className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
+      aria-label="Previous Slide"
+    >
+      <ChevronLeft className="w-5 h-5" />
+    </button>
+    <button
+      onClick={nextSlide}
+      className="pointer-events-auto w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all"
+      aria-label="Next Slide"
+    >
+      <ChevronRight className="w-5 h-5" />
+    </button>
+  </div>
+
+  {/* Dots Indicator */}
+  <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+    {HERO_SLIDES.map((_, idx) => (
+      <button
+        key={idx}
+        onClick={() => setCurrentSlide(idx)}
+        className={`h-2 rounded-full transition-all ${
+          idx === currentSlide ? 'w-8 bg-[#E5BF3B]' : 'w-2 bg-white/50 hover:bg-white'
+        }`}
+        aria-label={`Go to slide ${idx + 1}`}
+      />
+    ))}
+  </div>
+</div>
 
       {/* 3. NBF-STYLE VISUAL CATEGORY QUICK-CARDS */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6">
